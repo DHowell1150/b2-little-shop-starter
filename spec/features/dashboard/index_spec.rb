@@ -40,6 +40,13 @@ RSpec.describe "merchant dashboard" do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: @invoice_7.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_2.id)
 
+    @coupon1 = @merchant1.coupons.create!(name: "Buy one get one free", status: 1, code: "BOGO", amount: 50.0, coupon_type: "%")
+    @coupon2 = @merchant1.coupons.create!(name: "Ten Dollars off", status: 1, code: "10OFF", amount: 10, coupon_type: "dollars")
+    @coupon3 = @merchant1.coupons.create!(name: "Twenty Five Percent", status: 1, code: "25%OFF", amount: 25.0, coupon_type: "%")
+    @coupon4 = @merchant1.coupons.create!(name: "Twenty Percent", status: 1, code: "20%OFF", amount: 20.0, coupon_type: "%")
+    @coupon5 = @merchant1.coupons.create!(name: "Five dollars", status: 1, code: "5OFF", amount: 5, coupon_type: "dollars")
+    @coupon6 = @merchant1.coupons.create!(name: "Twenty Dollars off", code: "20OFF", amount: 20, coupon_type: "dollars")
+
     visit merchant_dashboard_index_path(@merchant1)
   end
 
@@ -118,5 +125,44 @@ RSpec.describe "merchant dashboard" do
 
   it "shows the date that the invoice was created in this format: Monday, July 18, 2019" do
     expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %-d, %Y"))
+  end
+
+  it "displays link to all coupons" do
+    # I see a link to view all of my coupons
+    expect(page).to have_link("Coupons")
+
+    # When I click this link
+    click_link "Coupons"
+
+    # I'm taken to my coupons index page
+    expect(current_path).to eq(merchant_coupons_path(@merchant1))
+
+    # Where I see all of my coupon names including their amount off 
+    # And each coupon's name is also a link to its show page.
+    within "#coupon-#{@coupon1.id}" do
+      expect(page).to have_link("#{@coupon1.name}", href: merchant_coupon_path(@merchant1, @coupon1))
+      expect(page).to have_content("#{@coupon1.amount} #{@coupon1.coupon_type} off")    
+    end
+    within "#coupon-#{@coupon2.id}" do
+      expect(page).to have_link("#{@coupon2.name}", href: merchant_coupon_path(@merchant1, @coupon2))
+      expect(page).to have_content("#{@coupon2.amount} #{@coupon2.coupon_type} off")    
+    end
+    within "#coupon-#{@coupon3.id}" do
+      expect(page).to have_link("#{@coupon3.name}", href: merchant_coupon_path(@merchant1, @coupon3))
+      expect(page).to have_content("#{@coupon3.amount} #{@coupon3.coupon_type} off")    
+    end
+    within "#coupon-#{@coupon4.id}" do
+      expect(page).to have_link("#{@coupon4.name}", href: merchant_coupon_path(@merchant1, @coupon4))
+      expect(page).to have_content("#{@coupon4.amount} #{@coupon4.coupon_type} off")    
+    end
+    within "#coupon-#{@coupon5.id}" do
+      expect(page).to have_link("#{@coupon5.name}", href: merchant_coupon_path(@merchant1, @coupon5))
+      expect(page).to have_content("#{@coupon5.amount} #{@coupon5.coupon_type} off")    
+    end
+    within "#coupon-#{@coupon6.id}" do
+      expect(page).to have_link("#{@coupon6.name}", href: merchant_coupon_path(@merchant1, @coupon6))
+      expect(page).to have_content("#{@coupon6.amount} #{@coupon6.coupon_type} off")    
+    end
+
   end
 end

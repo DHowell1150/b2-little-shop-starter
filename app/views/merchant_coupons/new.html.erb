@@ -1,0 +1,17 @@
+<h1> Add a Coupon </h1>
+
+<%= form_with url: merchant_coupons_path(@merchant), method: :post, data: {turbo: false} do |f| %>
+	<%= f.label :name %>
+	<%= f.text_field :name %><br>
+	
+	<%= f.label :code %>
+	<%= f.text_field :code %><br>
+	
+	<%= f.label :amount %>
+	<%= f.number_field :amount, in: 5.0..75.0 %><br>
+	
+	<%= f.label :coupon_type %>
+	<%= f.select :coupon_type, options_for_select([['Percent', '%'], ['Dollars', 'dollars']]), prompt: "Select Coupon Type" %><br> 
+	
+	<%= f.submit "Create Coupon"%>
+<% end %>

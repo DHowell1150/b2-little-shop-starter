@@ -5,6 +5,7 @@ class Merchant < ApplicationRecord
   has_many :invoices, through: :invoice_items
   has_many :customers, through: :invoices
   has_many :transactions, through: :invoices
+  has_many :coupons, dependent: :destroy
 
   enum status: [:enabled, :disabled]
 
@@ -19,6 +20,13 @@ class Merchant < ApplicationRecord
                 .limit(5)
   end
 
+  # def activated_coupons #Might not need this.  
+  #   coupons.activated
+  # end
+
+  def activated_coupons_count
+    coupons.activated.count
+  end
   def ordered_items_to_ship
     invoice_items.where("invoice_items.status = 0 OR invoice_items.status = 1").order(:created_at)
   end

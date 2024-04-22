@@ -1,0 +1,9 @@
+<h1>Coupons:</h1>
+<% @merchant.coupons.each do |coupon| %>
+<div id=<%="coupon-#{coupon.id}" %>>
+  <%= link_to "#{coupon.name}", merchant_coupon_path(@merchant, coupon) %>
+  <%= coupon.amount%> <%= coupon.coupon_type %> off<br>
+<% end %>
+</div>
+
+<%= link_to 'Create Coupon', new_merchant_coupon_path(@merchant) %>

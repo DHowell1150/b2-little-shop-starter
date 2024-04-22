@@ -5,11 +5,11 @@ describe Merchant do
     it { should validate_presence_of :name }
   end
   describe "relationships" do
-    it { should have_many :items }
     it { should have_many(:invoice_items).through(:items) }
     it {should have_many(:invoices).through(:invoice_items)}
     it { should have_many(:customers).through(:invoices) }
     it { should have_many(:transactions).through(:invoices) }
+    it { should have_many :coupons }
 
   end
 
@@ -117,7 +117,23 @@ describe Merchant do
       @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
       @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
 
+      @coupon1 = @merchant1.coupons.create!(name: "Buy one get one free", status: 1, code: "BOGO", amount: 50.0, coupon_type: "%")
+      @coupon2 = @merchant1.coupons.create!(name: "Ten Dollars off", status: 1, code: "10OFF", amount: 10, coupon_type: "dollars")
+      @coupon3 = @merchant1.coupons.create!(name: "Twenty Five Percent", status: 1, code: "25%OFF", amount: 25.0, coupon_type: "%")
+      @coupon4 = @merchant1.coupons.create!(name: "Twenty Percent", status: 1, code: "20%OFF", amount: 20.0, coupon_type: "%")
+      @coupon5 = @merchant1.coupons.create!(name: "Five dollars", status: 1, code: "5OFF", amount: 5, coupon_type: "dollars")
+      @coupon6 = @merchant1.coupons.create!(name: "Twenty Dollars off", code: "20OFF", amount: 20, coupon_type: "dollars")
     end
+
+    # it "#activated_coupons" do
+    #   expect(@merchant1.activated_coupons).to match_array([@coupon1, @coupon2, @coupon3, @coupon4, @coupon5])
+    #   expect(@merchant1.activated_coupons).not_to include(@coupon6)
+    # end
+
+    it "#activated_coupons_count" do
+      expect(@merchant1.activated_coupons_count).to eq(5)
+    end
+
     it "can list items ready to ship" do
       expect(@merchant1.ordered_items_to_ship).to eq([@ii_1, @ii_2, @ii_4, @ii_6, @ii_7, @ii_8, @ii_9, @ii_10])
     end
