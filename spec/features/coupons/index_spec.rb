@@ -64,6 +64,20 @@ RSpec.describe 'coupon index page', type: :feature do
         # And I can see my new coupon listed.
         expect(page).not_to have_content("My favorite coupon idea")
       end
+
+      it "has sections for activated and deactivated coupons" do
+        within '.activated' do
+          save_and_open_page
+          expect(page).to have_content(@coupon1.name)
+          expect(page).to have_content(@coupon2.name)
+          expect(page).to have_content(@coupon3.name)
+          expect(page).to have_content(@coupon4.name)
+        end
+        within '.deactivated' do
+          expect(page).to have_content(@coupon5.name)
+          expect(page).to have_content(@coupon6.name)
+        end
+      end
     end 
   end
 end

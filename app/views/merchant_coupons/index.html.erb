@@ -6,4 +6,24 @@
 <% end %>
 </div>
 
-<%= link_to 'Create Coupon', new_merchant_coupon_path(@merchant) %>
+<%= link_to 'Create Coupon', new_merchant_coupon_path(@merchant) %><br>
+
+
+<h3>Activated Coupons: </h3>
+<div class="activated">
+  <% @merchant.coupons.each do |coupon| %>
+    <% if coupon.activated? %>
+      <%= coupon.name%><br>
+    <% end %>
+  <% end %>
+</div>  <br>
+
+
+<h3>Deactivated Coupons: </h3>
+<div class="deactivated">
+  <% @merchant.coupons.each do |coupon| %>
+    <% if coupon.deactivated? %>
+      <%= coupon.name %><br>
+    <% end %>
+  <% end %>
+</div>
