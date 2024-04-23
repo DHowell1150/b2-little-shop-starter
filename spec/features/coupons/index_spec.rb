@@ -67,7 +67,6 @@ RSpec.describe 'coupon index page', type: :feature do
 
       it "has sections for activated and deactivated coupons" do
         within '.activated' do
-          save_and_open_page
           expect(page).to have_content(@coupon1.name)
           expect(page).to have_content(@coupon2.name)
           expect(page).to have_content(@coupon3.name)

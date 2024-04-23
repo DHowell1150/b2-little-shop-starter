@@ -14,4 +14,17 @@ class Invoice < ApplicationRecord
   def total_revenue
     invoice_items.sum("unit_price * quantity")
   end
+  
+  def discount_in_dollars_for_perentage_coupon
+    total_revenue * (coupon.amount / 100)
+  end
+
+  def rev_after_coupons
+    if coupon.coupon_type == "dollars"
+      total_revenue - coupon.amount
+    else
+      total_revenue - self.discount_in_dollars_for_perentage_coupon
+    end
+  end
+
 end

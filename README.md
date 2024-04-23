@@ -86,3 +86,19 @@ And I see both the subtotal revenue from that invoice (before coupon) and the gr
 * Alternate Paths to consider: 
 1. There may be invoices with items from more than 1 merchant. Coupons for a merchant only apply to items from that merchant.
 2. When a coupon with a dollar-off value is used with an invoice with multiple merchants' items, the dollar-off amount applies to the total amount even though there may be items present from another merchant.
+
+
+
+AR attempts:
+1. SELECT coupons.coupon_type, coupons.amount, coupons.id, invoice_items.unit_price, invoice_items.quantity
+from coupons
+join invoices
+on coupons.id = invoices.coupon_id
+join invoice_items
+on invoices.id = invoice_items.invoice_id
+where(invoice_items.sum(unit_price * quantity));
+
+
+ERROR:  schema "invoice_items" does not exist
+LINE 7: where(invoice_items.sum(unit_price * quantity));
+              ^
