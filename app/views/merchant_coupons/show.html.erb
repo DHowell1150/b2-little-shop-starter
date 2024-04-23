@@ -2,3 +2,8 @@
 
 Status: <%= @coupon.status %>
 Coupon has been used <%= @coupon.successful_times_used%> times
+<% if @coupon.activated? %>
+  <%= button_to "Deactivate",  merchant_coupon_path(@merchant, @coupon), params: { new_status: 'deactivated' }, method: :patch, data: { turbo: false } %>
+<% else  %>
+  <%= button_to "Activate",  merchant_coupon_path(@merchant, @coupon), params: { new_status: 'activated' }, method: :patch, data: { turbo: false } %>
+<% end %>
