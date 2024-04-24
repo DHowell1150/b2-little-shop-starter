@@ -37,6 +37,29 @@ Per screenshot in file below README.md: I was running into this error on localho
 2. I do know this stuff.  When I had errors that I was working on for a while and asked for help, I found that I was on track all along, it was mostly just syntactical errors but I was always close to what I needed. eg: ruby over AR in my calculations
 3. I do like this when I know what I'm doing
 4. I do better when I calm down.  The stress of timelines has been my downfall here.  If I can slow down, I work on sitting with the problem and getting messy with it to work through it.  Coming from a production background I was always waiting to know what to do before attempting which means I didn't attempt much before asking for help.  I need to get messy with it.  
+5. Section and div classes in spp/views/merchant_coupons/index.html.erb.  
+  - section above and below loop.  div below beginning and end of loop
+  - Header below the section and above the loop
+
+## AR Attempts
+1. SELECT coupons.coupon_type,    #made alias's for each of these for readability in table
+          coupons.amount, 
+          coupons.id, 
+          invoice_items.unit_price, 
+          invoice_items.quantity
+from coupons
+join invoices
+on coupons.id = invoices.coupon_id
+join invoice_items
+on invoices.id = invoice_items.invoice_id
+where(invoice_items.sum(unit_price * quantity));
+
+
+ERROR:  schema "invoice_items" does not exist
+LINE 7: where(invoice_items.sum(unit_price * quantity));
+              ^
+
+
 
 ## Evaluation
 Problems and how solved: no coupons on localhost: added manually due to lack of csvload coupons. then added csv. 

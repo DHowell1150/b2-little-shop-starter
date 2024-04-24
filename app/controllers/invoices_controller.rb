@@ -27,9 +27,6 @@ class InvoicesController < ApplicationController
     @merchant = Merchant.find(params[:merchant_id])
   end
 
-  def add_invoice_coupon
-    
-  end
   def find_merchant
     @merchant = Merchant.find(params[:merchant_id])
   end
