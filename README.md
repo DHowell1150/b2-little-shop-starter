@@ -27,7 +27,16 @@ Per screenshot in file below README.md: I was running into this error on localho
 
 
 ## QUESTIONS
+1. ruby on calculations.  Can they be refactored?
+2. CSV load in trying to troubleshoot needing to load coupons manually on local host. Did I need to do that since I already instantiated them locally?
+3. Good process in checking functionality through steps of save_and_open_page => localhost => deployment.  
+4. Can I do one conditional with two sad paths?  Or should I group them with a more vague error message? US2 sad paths.  
 
+## LEARNED
+1. Be diligent about adding and committing with detailed commit messages.  I thought I would knowk where I was at when I was making those commits.  I need more detail than even that and to commit more often.  
+2. I do know this stuff.  When I had errors that I was working on for a while and asked for help, I found that I was on track all along, it was mostly just syntactical errors but I was always close to what I needed. eg: ruby over AR in my calculations
+3. I do like this when I know what I'm doing
+4. I do better when I calm down.  The stress of timelines has been my downfall here.  If I can slow down, I work on sitting with the problem and getting messy with it to work through it.  Coming from a production background I was always waiting to know what to do before attempting which means I didn't attempt much before asking for help.  I need to get messy with it.  
 
 ## Evaluation
 Problems and how solved: no coupons on localhost: added manually due to lack of csvload coupons. then added csv. 
