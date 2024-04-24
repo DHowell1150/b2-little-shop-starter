@@ -17,7 +17,6 @@
   "<%= @invoice.coupon.name %>" Applied With: <%= @invoice.coupon.code %>
   <p>Revenue After Coupons Applied: <%=number_to_currency(@invoice.rev_after_coupons)%><br>
 
-
   <h4>Customer:</h4>
     <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %><br>
     <%= @invoice.customer.address %><br>

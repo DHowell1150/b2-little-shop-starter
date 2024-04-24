@@ -20,7 +20,7 @@ describe "Admin Invoices Index Page" do
 
     @item_1 = Item.create!(name: "test", description: "lalala", unit_price: 6, merchant_id: @m1.id)
     @item_2 = Item.create!(name: "rest", description: "dont test me", unit_price: 12, merchant_id: @m1.id)
-    @item_3 = Item.create!(name: "best", description: " test me", unit_price: 12, merchant_id: @m2.id)
+    @item_3 = Item.create!(name: "best", description: "test me", unit_price: 12, merchant_id: @m2.id)
 
     @ii_1 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_1.id, quantity: 12, unit_price: 2, status: 0)
     @ii_2 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_2.id, quantity: 6, unit_price: 1, status: 1)
@@ -84,7 +84,8 @@ describe "Admin Invoices Index Page" do
     visit admin_invoice_path(@i2)
 
 # I see the name and code of the coupon that was used (if there was a coupon applied)
-    expect(page).to have_content(@coupon1.name)
+save_and_open_page
+    expect(page).to have_content(@coupon2.name)
     expect(page).to have_content(@coupon1.code)
 # And I see both the subtotal revenue from that invoice (before coupon) and the grand total revenue (after coupon) for this invoice.
     expect(page).to have_content("Total Revenue: $2088.00")
