@@ -1,6 +1,14 @@
 `Heroku open` to deploy
 https://salty-retreat-39771-4e5699d91b7d.herokuapp.com/
 
+## I am proud of myself for:
+- My determination and focus in this project.  
+  - I honestly didn't think I could do this and I was proud to say I kept chugging along one elephant bite at a time. 
+- Deploying solo for the first time. I've never actually had hands on in any of the deployments up to this point.  
+- When I ran into trouble that I eventually had to ask help for, I was always on the right track.  My logic and approach were sound.  It was usually syntactical things that got in the way.  
+- How I learned to sit with the problems without being able to ask for help
+  - this grew my resourcefulness and I practiced the things I thought I was already practicing: rubber ducking, whiteboarding, actually TRYING things without knowing the end result or how it would play out.  I let it get messy.  
+  - These are all things we knew but I hadn't experienced them to the point I did in this project and it was invaluable to be made to slow down and look at it myself instead of reaching for help the fisrt or second thing. 
 ## DEPLOYMENT: 
 - This is the first time I have hands-on deployed.  This was a win for me.
 
@@ -15,11 +23,20 @@ You may have mistyped the address or the page may have moved.`
 
 
 ## ERRORS
-Per screenshot in file below README.md: I was running into this error on localhost http://localhost:3000/merchants/1/coupons/1.
+### No coupon connected to invoice/show
+- Per screenshot in file below README.md: I was running into this error on localhost http://localhost:3000/merchants/1/coupons/1.
 - I thought seeding data would be enough but that didn't work.
 - I tried to manually input coupons in localhost then activate them. That worked temporarily
 - I then created a CSV file with my coupons, imported the objects I had created, added a header, created a code block for Coupons in lib/tasks/csv_load.rake then ordered it behind Merchants in the `task :all do` method at the end.  The load actually WORKED (huge win) after a lot of finagling however, it did not solve my problem.  I still don't know where this error is coming from. 
-- Pry returns a coupon in the model and feature tests
+- Pry returns a coupon in the model and feature tests but not the view
+- seeds.destroy_all in seed file
+- destroy all for each table in the csv_load file
+- Added :status to #invoice_params
+
+### model method errors in invoices and customers
+- Played around with all sorts of relational changes in spec objects
+- tried to utilize pluck in AR methods
+- 
 
 ## PLACES TO REFACTOR
 - I'm curious if there is a better, more efficient way to do US 7 logic.  I used ruby and utilized a helper method for readability.  
@@ -72,4 +89,22 @@ need to do:
   - overall revenue change on merchant and admin invoice show pages
 - second sad path
 - if a coupon exceeds the total revenue, revenue doesn't go lower than zero. 
+
+
+
+1. merchant dashboard http://localhost:3000/merchants/1/dashboard
+2. merchant coupon create http://localhost:3000/merchants/1/coupons
+3. merchant coupon deactivate http://localhost:3000/merchants/1/coupons/1
+4. merchant coupon activate
+5. 
+6. merchant coupons index (sorted) http://localhost:3000/merchants/1/coupons
+7. merchant invoice show http://localhost:3000/merchants/1/
+8. admin invoice show http://localhost:3000/admin/invoices/1
+
+
+http://localhost:3000/admin/invoices
+
+
+
+
 

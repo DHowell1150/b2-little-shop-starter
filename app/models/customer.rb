@@ -13,12 +13,17 @@ class Customer < ApplicationRecord
       .select("customers.*, count('transactions.result') as top_result")
       .order(top_result: :desc)
       .limit(5)
+      # .pluck
+
+      
   # joins(:transactions)
   # .select("customers.*, COUNT(DISTINCT transactions.id) AS transaction_count")
   # .where("result = 1")
   # .group(:id)
   # .order(transaction_count: :desc)
   # .limit(5)
+
+
   end
 
 
