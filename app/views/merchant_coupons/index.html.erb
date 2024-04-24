@@ -1,29 +1,22 @@
 <h1>Coupons:</h1>
-<% @merchant.coupons.each do |coupon| %>
-<div id=<%="coupon-#{coupon.id}" %>>
-  <%= link_to "#{coupon.name}", merchant_coupon_path(@merchant, coupon) %>
-  <%= coupon.amount%> <%= coupon.coupon_type %> off<br>
-<% end %>
-</div>
-
 <%= link_to 'Create Coupon', new_merchant_coupon_path(@merchant) %><br>
 
-
-<h3>Activated Coupons: </h3>
-<div class="activated">
-  <% @merchant.coupons.each do |coupon| %>
-    <% if coupon.activated? %>
-      <%= coupon.name%><br>
+<section class="activated">
+  <h3>Activated Coupons: </h3>
+  <% @merchant.activated.each do |coupon| %>
+    <div id=<%="coupon-#{coupon.id}" %>>
+      <%= link_to "#{coupon.name}", merchant_coupon_path(@merchant, coupon) %>
+      <%= coupon.amount%> <%= coupon.coupon_type %> off<br>
     <% end %>
-  <% end %>
-</div>  <br>
+  </div>
+</section>
 
-
-<h3>Deactivated Coupons: </h3>
-<div class="deactivated">
-  <% @merchant.coupons.each do |coupon| %>
-    <% if coupon.deactivated? %>
-      <%= coupon.name %><br>
+<section class="deactivated">
+  <h3>Deactivated Coupons: </h3>
+  <% @merchant.deactivated.each do |coupon| %>
+    <div id=<%="coupon-#{coupon.id}" %>>
+      <%= link_to "#{coupon.name}", merchant_coupon_path(@merchant, coupon) %>
+      <%= coupon.amount%> <%= coupon.coupon_type %> off<br>
     <% end %>
-  <% end %>
-</div>
+  </div>
+</section>

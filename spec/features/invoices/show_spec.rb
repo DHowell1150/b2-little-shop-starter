@@ -66,16 +66,15 @@ RSpec.describe "invoices show" do
 
   it "displays grand total revenue after discount is applied" do
     visit merchant_invoice_path(@merchant1, @invoice_1)
-    # And I see the grand total revenue after the discount was applied
     expect(page).to have_content("Revenue After Coupons Applied: #{@invoice_1.rev_after_coupons}")
-    #line 14/15 on view
   end
 
-  # it "has a link to the coupon's show page that was used on this invoice" do
-  #   visit merchant_invoice_path(@merchant1, @invoice_1)
-  #   # And I see the name and code of the coupon used as a link to that coupon's show page.
+  it "has a link to the coupon's show page that was used on this invoice" do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+    # And I see the name and code of the coupon used as a link to that coupon's show page.
+    expect(page).to have_link("#{@coupon1.code}")
 
-  # end
+  end
 
 
 end

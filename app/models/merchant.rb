@@ -66,4 +66,12 @@ class Merchant < ApplicationRecord
   def disabled_items
     items.where(status: 0)
   end
+
+  def activated
+    coupons.where(status: "activated")
+  end
+
+  def deactivated
+    coupons.where(status: "deactivated")
+  end
 end

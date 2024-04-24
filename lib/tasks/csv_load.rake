@@ -16,9 +16,16 @@ namespace :csv_load do
       puts "Merchants imported."
    end
 
+
    task :items => :environment do
       CSV.foreach("db/data/items.csv", headers: true) do |row|
-         Item.create!(id: row.to_hash["id"], name: row.to_hash["name"], description: row.to_hash["description"], unit_price: row.to_hash["unit_price"].to_f / 100, created_at: row.to_hash["created_at"], updated_at: row.to_hash["updated_at"], merchant_id: row.to_hash["merchant_id"], status: 1)
+         Item.create!(id: row.to_hash["id"], 
+                     name: row.to_hash["name"], 
+                     description: row.to_hash["description"], 
+                     unit_price: row.to_hash["unit_price"].to_f / 100, 
+                     created_at: row.to_hash["created_at"], 
+                     updated_at: row.to_hash["updated_at"], merchant_id: row.to_hash["merchant_id"], 
+                     status: 1)
       end
       ActiveRecord::Base.connection.reset_pk_sequence!("items")
       puts "Items imported."
@@ -85,7 +92,7 @@ namespace :csv_load do
    end
 
    task :all do 
-      [:customers, :invoices, :merchants, :items, :invoice_items, :transactions].each do |task|
+      [:customers, :coupons, :invoices, :merchants, :items, :invoice_items, :transactions].each do |task|
          Rake::Task["csv_load:#{task}".to_sym].invoke
       end
    end

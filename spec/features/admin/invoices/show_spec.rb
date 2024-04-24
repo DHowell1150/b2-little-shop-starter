@@ -3,19 +3,29 @@ require "rails_helper"
 describe "Admin Invoices Index Page" do
   before :each do
     @m1 = Merchant.create!(name: "Merchant 1")
+    @m2 = Merchant.create!(name: "Jewelry")
+
+    #activated
+    @coupon1 = @m1.coupons.create!(name: "Ten Dollars off", status: 1, code: "10OFF", amount: 10, coupon_type: "dollars")
+    
+    #deactivated
+    @coupon5 = @m1.coupons.create!(name: "Five dollars", code: "5OFF", amount: 5, coupon_type: "dollars") 
+
 
     @c1 = Customer.create!(first_name: "Yo", last_name: "Yoz", address: "123 Heyyo", city: "Whoville", state: "CO", zip: 12345)
     @c2 = Customer.create!(first_name: "Hey", last_name: "Heyz")
 
-    @i1 = Invoice.create!(customer_id: @c1.id, status: 2, created_at: "2012-03-25 09:54:09")
-    @i2 = Invoice.create!(customer_id: @c2.id, status: 1, created_at: "2012-03-25 09:30:09")
+    @i1 = Invoice.create!(customer_id: @c1.id, status: 2, created_at: "2012-03-25 09:54:09", coupon_id: @coupon1.id)
+    @i2 = Invoice.create!(customer_id: @c2.id, status: 1, created_at: "2012-03-25 09:30:09", coupon_id: @coupon5.id)
 
     @item_1 = Item.create!(name: "test", description: "lalala", unit_price: 6, merchant_id: @m1.id)
     @item_2 = Item.create!(name: "rest", description: "dont test me", unit_price: 12, merchant_id: @m1.id)
+    @item_3 = Item.create!(name: "best", description: " test me", unit_price: 12, merchant_id: @m2.id)
 
     @ii_1 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_1.id, quantity: 12, unit_price: 2, status: 0)
     @ii_2 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_2.id, quantity: 6, unit_price: 1, status: 1)
     @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_2.id, quantity: 87, unit_price: 12, status: 2)
+    @ii_4 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_3.id, quantity: 87, unit_price: 12, status: 2)
 
     visit admin_invoice_path(@i1)
   end
@@ -68,5 +78,16 @@ describe "Admin Invoices Index Page" do
       expect(current_path).to eq(admin_invoice_path(@i1))
       expect(@i1.status).to eq("completed")
     end
+  end
+
+  it "Coupon only applies to items for that merchant" do
+    visit admin_invoice_path(@i2)
+
+# I see the name and code of the coupon that was used (if there was a coupon applied)
+    expect(page).to have_content(@coupon1.name)
+    expect(page).to have_content(@coupon1.code)
+# And I see both the subtotal revenue from that invoice (before coupon) and the grand total revenue (after coupon) for this invoice.
+    expect(page).to have_content("Total Revenue: $2088.00")
+    expect(page).to have_content("Revenue After Coupons Applied: $2083.00")
   end
 end

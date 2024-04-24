@@ -8,7 +8,8 @@ class InvoicesController < ApplicationController
 
   def show
     @customer = @invoice.customer
-    @invoice_item = InvoiceItem.where(invoice_id: params[:id]).first
+    @invoice_item = InvoiceItem.where(invoice_id: params[:id]).first 
+    # @coupon = Invoice.coupon.create!(name: "Ten Dollars off", status: 1, code: "10-OFF", amount: 10, coupon_type: "dollars")
   end
 
   def update
@@ -18,7 +19,7 @@ class InvoicesController < ApplicationController
 
   private
   def invoice_params
-    params.require(:invoice).permit(:status)
+    params.require(:invoice).permit(:status, :coupon_id)
   end
 
   def find_invoice_and_merchant
@@ -26,6 +27,9 @@ class InvoicesController < ApplicationController
     @merchant = Merchant.find(params[:merchant_id])
   end
 
+  def add_invoice_coupon
+    
+  end
   def find_merchant
     @merchant = Merchant.find(params[:merchant_id])
   end
