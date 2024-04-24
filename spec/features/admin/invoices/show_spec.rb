@@ -84,7 +84,6 @@ describe "Admin Invoices Index Page" do
     visit admin_invoice_path(@i2)
 
 # I see the name and code of the coupon that was used (if there was a coupon applied)
-save_and_open_page
     expect(page).to have_content(@coupon2.name)
     expect(page).to have_content(@coupon1.code)
 # And I see both the subtotal revenue from that invoice (before coupon) and the grand total revenue (after coupon) for this invoice.
