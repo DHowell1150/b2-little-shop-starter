@@ -5,7 +5,6 @@ class Admin::InvoicesController < ApplicationController
   end
 
   def show
-    
   end
 
   def edit

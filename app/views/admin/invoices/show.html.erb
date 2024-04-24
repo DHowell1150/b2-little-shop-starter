@@ -14,6 +14,7 @@
       <% end %>
   <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %>
   <p>Total Revenue: <%= number_to_currency(@invoice.total_revenue) %></p>
+  
   "<%= @invoice.coupon.name %>" Applied With: <%= @invoice.coupon.code %>
   <p>Revenue After Coupons Applied: <%=number_to_currency(@invoice.rev_after_coupons)%><br>
 

@@ -38,11 +38,11 @@ Rake::Task["csv_load:all"].invoke
 @customer_5 = Customer.create!(first_name: "Sylvester", last_name: "Nader")
 @customer_6 = Customer.create!(first_name: "Herber", last_name: "Kuhn")
 
-@invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09", coupon_id: @coupon1)
-@invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-28 14:54:09", coupon_id: @coupon2)
-@invoice_3 = Invoice.create!(customer_id: @customer_2.id, status: 2, coupon_id: @coupon3)
-@invoice_4 = Invoice.create!(customer_id: @customer_3.id, status: 2, coupon_id: @coupon4)
-@invoice_5 = Invoice.create!(customer_id: @customer_4.id, status: 2, coupon_id: @coupon5)
+@invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09", coupon_id: @coupon1.id)
+@invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-28 14:54:09", coupon_id: @coupon2.id)
+@invoice_3 = Invoice.create!(customer_id: @customer_2.id, status: 2, coupon_id: @coupon3.id)
+@invoice_4 = Invoice.create!(customer_id: @customer_3.id, status: 2, coupon_id: @coupon4.id)
+@invoice_5 = Invoice.create!(customer_id: @customer_4.id, status: 2, coupon_id: @coupon5.id)
 @invoice_6 = Invoice.create!(customer_id: @customer_5.id, status: 2)
 @invoice_7 = Invoice.create!(customer_id: @customer_6.id, status: 2)
 

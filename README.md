@@ -59,6 +59,8 @@ You may have mistyped the address or the page may have moved.`
   - Header below the section and above the loop
 
 ## AR Attempts
+This one is funny because I had ruby calculations all figured out and I thought it had to be through AR so this was my first attempt before Abdul told me it could be Ruby.
+
 1. SELECT coupons.coupon_type,    #made alias's for each of these for readability in table
           coupons.amount, 
           coupons.id, 
@@ -87,11 +89,11 @@ need to do:
 - walk through 
   - coupon crud functionality
   - overall revenue change on merchant and admin invoice show pages
-- second sad path
+- second sad path( can I combine conditional statements)
 - if a coupon exceeds the total revenue, revenue doesn't go lower than zero. 
 
 
-
+US links for presentation
 1. merchant dashboard http://localhost:3000/merchants/1/dashboard
 2. merchant coupon create http://localhost:3000/merchants/1/coupons
 3. merchant coupon deactivate http://localhost:3000/merchants/1/coupons/1
