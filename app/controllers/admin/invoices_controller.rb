@@ -22,6 +22,6 @@ class Admin::InvoicesController < ApplicationController
   end
 
   def invoice_params
-    params.require(:invoice).permit(:status)
+    params.require(:invoice).permit(:status, :coupon_id)
   end
 end

@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
+# Seed.destroy_all
 Rake::Task["csv_load:all"].invoke
 @merchant1 = Merchant.create!(name: "Hair Care")
 @merchant2 = Merchant.create!(name: "Jewelry")
@@ -24,8 +25,8 @@ Rake::Task["csv_load:all"].invoke
 @item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: @merchant1.id)
 @item_3 = Item.create!(name: "Brush", description: "This takes out tangles", unit_price: 5, merchant_id: @merchant1.id)
 @item_4 = Item.create!(name: "Hair tie", description: "This holds up your hair", unit_price: 1, merchant_id: @merchant1.id)
-@item_7 = Item.create!(name: "Scrunchie", description: "This holds up your hair but is bigger", unit_price: 3, merchant_id: @merchant.id)
-@item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: @merchant.id)
+@item_7 = Item.create!(name: "Scrunchie", description: "This holds up your hair but is bigger", unit_price: 3, merchant_id: @merchant2.id)
+@item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: @merchant2.id)
 
 @item_5 = Item.create!(name: "Bracelet", description: "Wrist bling", unit_price: 200, merchant_id: @merchant2.id)
 @item_6 = Item.create!(name: "Necklace", description: "Neck bling", unit_price: 300, merchant_id: @merchant2.id)
@@ -37,11 +38,11 @@ Rake::Task["csv_load:all"].invoke
 @customer_5 = Customer.create!(first_name: "Sylvester", last_name: "Nader")
 @customer_6 = Customer.create!(first_name: "Herber", last_name: "Kuhn")
 
-@invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09", coupon_id: @coupon1)
-@invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-28 14:54:09", coupon_id: @coupon2)
-@invoice_3 = Invoice.create!(customer_id: @customer_2.id, status: 2, coupon_id: @coupon3)
-@invoice_4 = Invoice.create!(customer_id: @customer_3.id, status: 2, coupon_id: @coupon4)
-@invoice_5 = Invoice.create!(customer_id: @customer_4.id, status: 2, coupon_id: @coupon5)
+@invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09", coupon_id: @coupon1.id)
+@invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-28 14:54:09", coupon_id: @coupon2.id)
+@invoice_3 = Invoice.create!(customer_id: @customer_2.id, status: 2, coupon_id: @coupon3.id)
+@invoice_4 = Invoice.create!(customer_id: @customer_3.id, status: 2, coupon_id: @coupon4.id)
+@invoice_5 = Invoice.create!(customer_id: @customer_4.id, status: 2, coupon_id: @coupon5.id)
 @invoice_6 = Invoice.create!(customer_id: @customer_5.id, status: 2)
 @invoice_7 = Invoice.create!(customer_id: @customer_6.id, status: 2)
 

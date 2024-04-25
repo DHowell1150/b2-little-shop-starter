@@ -1,89 +1,112 @@
-Missed Procfile the first go around on deployment
-
-
 `Heroku open` to deploy
+https://salty-retreat-39771-4e5699d91b7d.herokuapp.com/
 
-1. Merchant Coupons Index 
+## I am proud of myself for:
+- My determination and focus in this project.  
+  - I honestly didn't think I could do this and I was proud to say I kept chugging along one elephant bite at a time. 
+- Deploying solo for the first time. I've never actually had hands on in any of the deployments up to this point.  
+- When I ran into trouble that I eventually had to ask help for, I was always on the right track.  My logic and approach were sound.  It was usually syntactical things that got in the way.  
+- How I learned to sit with the problems without being able to ask for help
+  - this grew my resourcefulness and I practiced the things I thought I was already practicing: rubber ducking, whiteboarding, actually TRYING things without knowing the end result or how it would play out.  I let it get messy.  
+  - These are all things we knew but I hadn't experienced them to the point I did in this project and it was invaluable to be made to slow down and look at it myself instead of reaching for help the fisrt or second thing. 
+## DEPLOYMENT: 
+- This is the first time I have hands-on deployed.  This was a win for me.
 
-As a merchant
-When I visit my merchant dashboard page
-I see a link to view all of my coupons
-When I click this link
-I'm taken to my coupons index page
-Where I see all of my coupon names including their amount off 
-And each coupon's name is also a link to its show page.
+- Missed Procfile the first go around on deployment
+- I was able to deploy the app on heroku but could not figure out how to get to any pages after initial deployment.  
 
-2. Merchant Coupon Create 
-
-As a merchant
-When I visit my coupon index page 
-I see a link to create a new coupon.
-When I click that link 
-I am taken to a new page where I see a form to add a new coupon.
-When I fill in that form with a name, unique code, an amount, and whether that amount is a percent or a dollar amount
-And click the Submit button
-I'm taken back to the coupon index page 
-And I can see my new coupon listed.
+    - I tried looking at heroku logs --tail but struggled deciphering it.  This was one error I could see but I do, in fact have that route. 
+ (No route matches [GET] "/merchants/1/coupons"): (No route matches [GET] "/merchants/1/coupons")
+   - I tried using forward slashes with the path I wanted to follow like it said online but it just said: 
+`The page you were looking for doesn't exist.
+You may have mistyped the address or the page may have moved.`
 
 
-* Sad Paths to consider: 
-1. This Merchant already has 5 active coupons
-2. Coupon code entered is NOT unique
+## ERRORS
+### No coupon connected to invoice/show
+- Per screenshot in file below README.md: I was running into this error on localhost http://localhost:3000/merchants/1/coupons/1.
+- I thought seeding data would be enough but that didn't work.
+- I tried to manually input coupons in localhost then activate them. That worked temporarily
+- I then created a CSV file with my coupons, imported the objects I had created, added a header, created a code block for Coupons in lib/tasks/csv_load.rake then ordered it behind Merchants in the `task :all do` method at the end.  The load actually WORKED (huge win) after a lot of finagling however, it did not solve my problem.  I still don't know where this error is coming from. 
+- Pry returns a coupon in the model and feature tests but not the view
+- seeds.destroy_all in seed file
+- destroy all for each table in the csv_load file
+- Added :status to #invoice_params
 
-3. Merchant Coupon Show Page 
+### model method errors in invoices and customers
+- Played around with all sorts of relational changes in spec objects
+- tried to utilize pluck in AR methods
+- 
 
-As a merchant 
-When I visit a merchant's coupon show page 
-I see that coupon's name and code 
-And I see the percent/dollar off value
-As well as its status (active or inactive)
-And I see a count of how many times that coupon has been used.
+## PLACES TO REFACTOR
+- I'm curious if there is a better, more efficient way to do US 7 logic.  I used ruby and utilized a helper method for readability.  
+- I would love to try styling at some point.  I actually think I may like it more. As it is, I stuck to trying to tidy up my logic.  
 
-(Note: "use" of a coupon should be limited to successful transactions.)
 
-4. Merchant Coupon Deactivate
+## QUESTIONS
+1. ruby on calculations.  Can they be refactored?
+2. CSV load in trying to troubleshoot needing to load coupons manually on local host. Did I need to do that since I already instantiated them locally?
+3. Good process in checking functionality through steps of save_and_open_page => localhost => deployment.  
+4. Can I do one conditional with two sad paths?  Or should I group them with a more vague error message? US2 sad paths.  
 
-As a merchant 
-When I visit one of my active coupon's show pages
-I see a button to deactivate that coupon
-When I click that button
-I'm taken back to the coupon show page 
-And I can see that its status is now listed as 'inactive'.
+## LEARNED
+1. Be diligent about adding and committing with detailed commit messages.  I thought I would knowk where I was at when I was making those commits.  I need more detail than even that and to commit more often.  
+2. I do know this stuff.  When I had errors that I was working on for a while and asked for help, I found that I was on track all along, it was mostly just syntactical errors but I was always close to what I needed. eg: ruby over AR in my calculations
+3. I do like this when I know what I'm doing
+4. I do better when I calm down.  The stress of timelines has been my downfall here.  If I can slow down, I work on sitting with the problem and getting messy with it to work through it.  Coming from a production background I was always waiting to know what to do before attempting which means I didn't attempt much before asking for help.  I need to get messy with it.  
+5. Section and div classes in spp/views/merchant_coupons/index.html.erb.  
+  - section above and below loop.  div below beginning and end of loop
+  - Header below the section and above the loop
 
-* Sad Paths to consider: 
-1. A coupon cannot be deactivated if there are any pending invoices with that coupon.
+## AR Attempts
+This one is funny because I had ruby calculations all figured out and I thought it had to be through AR so this was my first attempt before Abdul told me it could be Ruby.
 
-5. Merchant Coupon Activate
+1. SELECT coupons.coupon_type,    #made alias's for each of these for readability in table
+          coupons.amount, 
+          coupons.id, 
+          invoice_items.unit_price, 
+          invoice_items.quantity
+from coupons
+join invoices
+on coupons.id = invoices.coupon_id
+join invoice_items
+on invoices.id = invoice_items.invoice_id
+where(invoice_items.sum(unit_price * quantity));
 
-As a merchant 
-When I visit one of my inactive coupon show pages
-I see a button to activate that coupon
-When I click that button
-I'm taken back to the coupon show page 
-And I can see that its status is now listed as 'active'.
 
-6. Merchant Coupon Index Sorted
+ERROR:  schema "invoice_items" does not exist
+LINE 7: where(invoice_items.sum(unit_price * quantity));
+              ^
 
-As a merchant
-When I visit my coupon index page
-I can see that my coupons are separated between active and inactive coupons. 
 
-7. Merchant Invoice Show Page: Subtotal and Grand Total Revenues
 
-As a merchant
-When I visit one of my merchant invoice show pages
-I see the subtotal for my merchant from this invoice (that is, the total that does not include coupon discounts)
-And I see the grand total revenue after the discount was applied
-And I see the name and code of the coupon used as a link to that coupon's show page.
+## Evaluation
+Problems and how solved: no coupons on localhost: added manually due to lack of csvload coupons. then added csv. 
 
-8. Admin Invoice Show Page: Subtotal and Grand Total Revenues
+Please prepare the flow of your presentation in advance.
 
-As an admin
-When I visit one of my admin invoice show pages
-I see the name and code of the coupon that was used (if there was a coupon applied)
-And I see both the subtotal revenue from that invoice (before coupon) and the grand total revenue (after coupon) for this invoice.
+need to do:
+- walk through 
+  - coupon crud functionality
+  - overall revenue change on merchant and admin invoice show pages
+- second sad path( can I combine conditional statements)
+- if a coupon exceeds the total revenue, revenue doesn't go lower than zero. 
 
-* Alternate Paths to consider: 
-1. There may be invoices with items from more than 1 merchant. Coupons for a merchant only apply to items from that merchant.
-2. When a coupon with a dollar-off value is used with an invoice with multiple merchants' items, the dollar-off amount applies to the total amount even though there may be items present from another merchant.
+
+US links for presentation
+1. merchant dashboard http://localhost:3000/merchants/1/dashboard
+2. merchant coupon create http://localhost:3000/merchants/1/coupons
+3. merchant coupon deactivate http://localhost:3000/merchants/1/coupons/1
+4. merchant coupon activate
+5. 
+6. merchant coupons index (sorted) http://localhost:3000/merchants/1/coupons
+7. merchant invoice show http://localhost:3000/merchants/1/
+8. admin invoice show http://localhost:3000/admin/invoices/1
+
+
+http://localhost:3000/admin/invoices
+
+
+
+
 

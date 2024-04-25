@@ -66,6 +66,7 @@ RSpec.describe Customer, type: :model do
     end
 
     it 'top_customers' do
+      
       expect(Customer.top_customers).to eq([@customer, @customer_2, @customer_3, @customer_4, @customer_5])
     end
   end

@@ -1,7 +1,7 @@
-id,status,name,code,amount,coupon_type,merchant_id,created_at,updated_at
-1,1,Buy one get one free,1,BOGO,50.0,%,2024-04-01 12:00:00,2024-04-01 12:00:00
-2,1,Ten Dollars off,1,10OFF,10.0,dollars,2024-04-01 12:10:00,2024-04-01 12:10:00
-3,2,Twenty Five Percent,1,25%OFF,25.0,%,2024-04-01 12:20:00,2024-04-01 12:20:00
-4,2,Twenty Percent,1,20%OFF,20.0,%,2024-04-01 12:30:00,2024-04-01 12:30:00
-5,1,Five dollars,0,5OFF,5.0,dollars,2024-04-01 12:40:00,2024-04-01 12:40:00
-6,2,Twenty Dollars off,0,20OFF,20.0,dollars,2024-04-01 12:50:00,2024-04-01 12:50:00
+id,merchant_id,name,status,code,amount,coupon_type,created_at,updated_at
+1,1,Buy one get one free,activated,BOGO,50.0,%,2024-04-01 12:00:00,2024-04-01 12:00:00
+2,1,Ten Dollars off,activated,10OFF,10.0,dollars,2024-04-01 12:10:00,2024-04-01 12:10:00
+3,2,Twenty Five Percent,activated,25%OFF,25.0,%,2024-04-01 12:20:00,2024-04-01 12:20:00
+4,2,Twenty Percent,activated,20%OFF,20.0,%,2024-04-01 12:30:00,2024-04-01 12:30:00
+5,1,Five dollars,deactivated,5OFF,5.0,dollars,2024-04-01 12:40:00,2024-04-01 12:40:00
+6,2,Twenty Dollars off,deactivated,20OFF,20.0,dollars,2024-04-01 12:50:00,2024-04-01 12:50:00

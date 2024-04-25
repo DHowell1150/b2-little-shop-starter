@@ -1,6 +1,7 @@
 require "csv"
 namespace :csv_load do
    task :customers => :environment do
+      Customer.destroy_all
       CSV.foreach("db/data/customers.csv", headers: true) do |row|
          Customer.create!(row.to_hash)
       end
@@ -9,6 +10,7 @@ namespace :csv_load do
    end
 
    task :merchants => :environment do
+      Merchant.destroy_all
       CSV.foreach("db/data/merchants.csv", headers: true) do |row|
          Merchant.create!(row.to_hash)
       end
@@ -16,8 +18,18 @@ namespace :csv_load do
       puts "Merchants imported."
    end
 
+   desc "Imports coupon data"
+   task :coupons => :environment do
+      Coupon.destroy_all
+      CSV.foreach("db/data/coupons.csv", headers: true) do |row|
+         Coupon.create!(row.to_hash)
+      end
+      ActiveRecord::Base.connection.reset_pk_sequence!("coupons")
+      puts "Coupons imported"
+   end
 
    task :items => :environment do
+      Item.destroy_all
       CSV.foreach("db/data/items.csv", headers: true) do |row|
          Item.create!(id: row.to_hash["id"], 
                      name: row.to_hash["name"], 
@@ -32,6 +44,7 @@ namespace :csv_load do
       end
 
    task :invoices => :environment do
+      Invoice.destroy_all
       CSV.foreach("db/data/invoices.csv", headers: true) do |row|
          if row.to_hash["status"] == "cancelled"
             status = 0
@@ -51,6 +64,7 @@ namespace :csv_load do
    end
 
    task :transactions => :environment do
+      Transaction.destroy_all
       CSV.foreach("db/data/transactions.csv", headers: true) do |row|
          if row.to_hash["result"] == "failed"
             result = 0
@@ -70,6 +84,7 @@ namespace :csv_load do
    end
 
    task :invoice_items => :environment do
+      InvoiceItem.destroy_all
       CSV.foreach("db/data/invoice_items.csv", headers: true) do |row|
          if row.to_hash["status"] == "pending"
             status = 0
@@ -92,7 +107,7 @@ namespace :csv_load do
    end
 
    task :all do 
-      [:customers, :coupons, :invoices, :merchants, :items, :invoice_items, :transactions].each do |task|
+      [:customers, :invoices, :merchants, :coupons, :items, :invoice_items, :transactions].each do |task|
          Rake::Task["csv_load:#{task}".to_sym].invoke
       end
    end
